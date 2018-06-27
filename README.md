@@ -1,3 +1,4 @@
 # kaoJinBang_base
-base project for kjb 
-introduce
+base project structure for kjb   
+
+# introduce

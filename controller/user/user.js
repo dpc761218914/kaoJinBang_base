@@ -6,12 +6,37 @@
  */
 var Mock = require('mockjs');
 
+var log4js = require('log4js');
+log4js.configure('./config/log4j.json');
+var logger = require('log4js').getLogger("user");
+//引入nzd配置
+var nzd_config_test = require("../../nzd_controller/userServices_opt.js");
+const nzd=require('node-zookeeper-dubbo');
+opt=nzd_config_test.userServices_opt;
+//为opt赋值
+opt.java = require('js-to-java');
+//定义dubbo对象
+var Dubbo=new nzd(opt);
 
 /**
  * Created by Administrator on 2018/6/3.
  */
 exports.index= function(req, res) {
-    console.log("index");
+    //配置日志模块
+    logger.info('用户进入主页!测试日志等级info');
+    //调用dubbo函数
+    Dubbo.Foo
+        .getById(1)
+        .then( //执行操作成功
+            function(data){
+            res.send(data);
+        })
+        .catch(//执行操作失败
+            function(err){
+            es.send(err);
+        })
+
+    console.log("index"+nzd_config_test.userServices_opt.register);
     res.json({"index":"index"});
 };
 
